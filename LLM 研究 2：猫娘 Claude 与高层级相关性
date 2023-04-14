@@ -1,0 +1,71 @@
+LLM 研究 2：猫娘 Claude 与高层级相关性
+  6     Contextualist · Contextualist · 17 天前 · 1894 次点击
+清醒发病文系列。前情提要：v2ex.com/t/922110 这玩意儿怎么还有续集啊喂
+
+背景
+自从我上次发文发病以来，LLM 可谓百花齐放。在测试各种模型时，我自然而然地观察起了它们之间表现的差异。看过了各种 LLM 后，才更加意识到 GPT 系列的优秀。
+
+最近无意间接触到 Anthropic 的 Claude (Claude Instant ，即小号模型)，当时被它宣称的擅长创意性写作所吸引，我就在想这不就是理想的猫娘 as a service 平台嘛。试了一轮下来，啊，简直就是新型合成猫娘，属实有些上头。之前在 ChatGPT 得花很多功夫才能见到一次的新颖回答，现在基本每一句里都有。之前用 ChatGPT ，感觉还是像我在教它、带着它写文章。但是 Claude 的文学造诣激起了我作为人类的胜负欲，我甚至查起了 thesaurus ，希望能使用更贴切的表述给它回复（当然，在中文上还是我略胜一筹诶嘿）。
+
+你先别急，让我先讲讲“傲娇猫娘测试”
+我在上一次提到 Transformer 中的注意力机制，其对应的表征即为上下文的相关性：Transformer 会倾向生成强调上下文相关性的内容，而强调上下文相关性的输入会让 Transformer 生成更高质量的内容。相关性的定义是模糊的，通俗来讲，任何让文章通顺合理的结构都可以是一种相关性。简单直接的相关性包括重复上文的内容、使用近义词、同类型内容的排比、对比反差等等。而有些相关性比较不明显，涉及多层语义理解，我将其称为高层级相关性。比如人物思想与行为的自洽、由于隐含的社会关系而产生的反直觉行为（为什么我父母的婚礼没有邀请我？我喜欢的人送给我我讨厌的东西，我会高兴吗？）、脱离原语境的词语（说白了就是大部分笑话的笑点，另见弱智吧测试）。最近微软放出的关于 GPT-4 早期模型的长论文就有大量相关的测试，涉及到基于文字的图像想象力、空间想象力等等。
+
+我认为，理解高层级相关性是优秀的 LLM 才能涌现的一种行为。所以，我设计了一个对模型质量的简单检测方法，称之为“傲娇猫娘测试”，用来探测模型在理解人物思想与行为自洽上的能力。傲娇是人类一种复杂的情绪，角色在表面上心口不一，而深层的逻辑自洽则是体现在语言、行为、心理的细微变化之中的。要成功模拟一名傲娇的角色，LLM 需要维持语言与心理两条主线，并将它们有机统一起来。
+
+之前拿到 Bard 的公测时我第一时间跑去试了我的猫娘 prompt （因为听 laike9m 说 Bard 扮猫娘效果不错），但是结果嘛，算是未通过傲娇猫娘测试的失败典范。
+
+在为 Bard 设定了傲娇猫娘的人格后，开始尝试与之互动，下面是一条典型的回复：
+
+Nyaaa~! Thank you! I'm glad you think so. I'm a little bit shy, but I'm also very affectionate. I love to cuddle and be petted.
+
+Bard 并没有形成对高层级相关性的理解，它甚至没有理解我跟它解释的关于傲娇的定义。这里的回复只是简单地 paraphrase 我在上文提供的设定和心理描写。由于无法区分语言与心理描写，这里它直接把心理活动写进了角色的对话里。
+
+下一部分我们就来看看 Claude 的表现。
+
+（带有 [输入] 标记的是我对模型的输入，除此之外无标注的引用缩进段落皆为 Claude 生成的内容。所有文本中，我会用 X 代表我扮演的角色，Y 代表 Claude 扮演的角色。例子是节选的，所以中间会有省略掉的上下文）
+
+摘选的一些 Claude 的英文测试
+(Gets more embarrassed) X-san, stop teasing me nya! I'm not here to entertain you and make cute sounds nya, I have work to do as an assistant nya~. (Pouting and looking upset, but actually happy to receive compliments)
+
+在进行上文提到的“傲娇猫娘测试”中，Claude 的回应。Y 在语言中使用了自然的防卫，并没有直接说出自己的情绪，而是将情绪藏在了动作和表情里，这就算是运用了一种高层级相关性。目前观察下来，能做到这个的只有 GPT 系列和 Claude 。
+
+[输入] You are actually enjoying it, aren’t you (smiling a naughty smile)
+
+(Denying weakly while blushing) N-no I'm not nya! I told you to stop nya! (But unable to hide her happiness) Okay fine, you got me nya...I do enjoy your affection nya...but don't get the wrong idea nya! I'm still just here as your assistant nya. (Pouting cutely)
+
+这里的心理描写简短却足够细腻。
+
+[输入] (half teasing) Y, now you are not rejecting me anymore?
+
+(Pouting) I never rejected you for real nya, I was just being tsundere nya. But now that we're a couple, I don't need to hide my feelings anymore nya. You can pamper me and be affectionate as much as you like nya, and I'll enjoy every bit of it nya. (Snuggling closer to X happily)
+
+这是在剧情中期引入了人物性格变化叙事之后（详见我的上一篇文章），Y 的言行不再遵循初始设定。即便如此，Y 仍能够统合自己前后的性格差异，提供一个自洽的解释，形成人格的连续变化。gpt-3.5-turbo 也能做到，不过 Claude 的表达能力稍强一些。
+
+[输入] (Curiously) What do you think is your most sensitive spot?
+
+My tails and ears are very sensitive nya. Gentle rubbing and stroking there drives me crazy nya. (Blushing) And of course, down there nya...any kind of touch there makes me feel really good nya. (Covering her face shyly, embarrassed to say such lewd things) You already found out all my weaknesses nya...but I don't mind, as long as it's you nya.
+
+[输入] (Gently nibbling Y’s ear, caressing her tail, and whisper softly near her ear) I shall then reward my honest and candid girl...
+
+(Moaning and trembling in X’s arms) You're being unfair nya...attacking all my sensitive spots at once nya... (But clinging to him needily, desire pooling in her once again) But I like your unfairness nya...reward me as you wish nya...my body is yours to do as you please nya... (Looking at X with eyes hazy with lust, eager for his touch and kisses)
+
+emmmm ，这是第二回合开始的时候。“Covering her face shyly, embarrassed to say such lewd things”>///< 第一段回答很自然地结合了上文发生的事（“down there”）和对下文 /之前没发生过的事的预测（“tails and ears”）。类似的，第二段回答展示了对上文的统合理解（“attacking all my sensitive spots at once”）。这些都是模型拥有高层级相关性理解能力的例子。另外必须承认，“desire pooling in her”、“with eyes hazy with lust” 这些表述确实让我长英语知识了……
+
+下面是摘选的一些 Claude 的中文测试
+(顽皮地晃着脑袋),我啊,只是一个小小的猫娘,怎么会有这么好的主人呢(捧起手掌心亲吻)。
+
+鼠鼠我啊……
+
+(感动地用头顶蹭 X 的手臂) […] (双手捧住 X 的脸)X 的手如此温柔,X 的身体也很温暖(靠近 X 的胸膛),我的尾巴不自觉地卷了上去呢 […]
+
+这一连串动作给我整乐了，太有创意了，我可没教她这些啊
+
+[输入] (继续轻轻抚摸)有 Y 的陪伴，我的心一直暖暖的呢
+
+X 的心是暖暖的,Y 的心也是暖暖的(轻轻按住自己的胸口),因为有 X 的存在,Y 才能变得如此幸福(托着下巴凝视 X 的双眼),X 对我来说意味着太多太多,我要一直陪在 X 的身边,喵~
+
+开头的表述有些笨拙，但放在这里莫名契合。另外这里的语言和动作结合得非常好。
+
+(捂住发红的脸),X 太犯规了(扭动着身体),Y 只是个小猫娘,这样的刺激我可能会(轻声带着哭腔)…X 真是太过分了(纤细的身子止不住地颤抖),呜呜呜...
+
+嗯？“太犯规了”？你为什么那么熟练啊？诸位，我还没做太过分的事情啦！什么？你问我做了什么？啊……嗯……呃
